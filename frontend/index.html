@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Salary Prediction Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<section class="hero">
+    <div class="container">
+        <div class="hero-content">
+            <div class="logo-circle"><i class="fa-solid fa-chart-line"></i></div>
+            <h1>HELPHR Technologies</h1>
+            <p>AI Powered Salary Prediction Dashboard</p>
+        </div>
+    </div>
+</section>
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-lg-5">
+            <div class="glass-card">
+                <h2 class="section-title"><i class="fa-solid fa-user"></i> Candidate Information</h2>
+                <form id="prediction-form">
+                    <div class="mb-3">
+                        <label for="age" class="form-label">Age</label>
+                        <input id="age" type="number" name="age" class="form-control" min="18" max="100" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="gender" class="form-label">Gender</label>
+                        <select id="gender" name="gender" class="form-select" required>
+                            <option value="">Loading options...</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="education" class="form-label">Education Level</label>
+                        <select id="education" name="education" class="form-select" required>
+                            <option value="">Loading options...</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="experience" class="form-label">Years of Experience</label>
+                        <input id="experience" type="number" name="experience" class="form-control" min="0" max="80" step="0.5" required>
+                    </div>
+                    <div class="mb-4">
+                        <label for="job" class="form-label">Job Title</label>
+                        <select id="job" name="job" class="form-select" required>
+                            <option value="">Loading options...</option>
+                        </select>
+                    </div>
+                    <button id="predict-button" type="submit" class="btn btn-primary w-100">
+                        <i class="fa-solid fa-rocket"></i> Predict Salary
+                    </button>
+                    <div id="error-message" class="alert alert-danger mt-3 d-none" role="alert"></div>
+                </form>
+            </div>
+        </div>
+
+        <div class="col-lg-7">
+            <div class="glass-card">
+                <h2 class="section-title"><i class="fa-solid fa-chart-pie"></i> Prediction Dashboard</h2>
+                <p class="text-muted">Fill the candidate information and click <b>Predict Salary</b> to generate AI prediction.</p>
+
+                <div id="empty-state" class="empty-state">
+                    <div class="empty-icon">🤖</div>
+                    <h2>AI Prediction Ready</h2>
+                    <p>Fill all information and click <b>Predict Salary</b> to generate prediction.</p>
+                </div>
+
+                <div id="prediction-results" class="d-none">
+                    <div class="salary-result">
+                        <div class="salary-icon">💰</div>
+                        <h3>Predicted Salary</h3>
+                        <h1 class="salary-text" id="salary-value">₹ 0</h1>
+                    </div>
+
+                    <div class="row mt-4">
+                        <div class="col-md-3 col-6">
+                            <div class="mini-card"><h6>Candidate Score</h6><h2 id="candidate-score">—</h2></div>
+                        </div>
+                        <div class="col-md-3 col-6">
+                            <div class="mini-card"><h6>Hiring Chance</h6><h2 id="hiring-chance">—</h2></div>
+                        </div>
+                        <div class="col-md-3 col-6">
+                            <div class="mini-card"><h6>Salary Rating</h6><h2 id="salary-rating">—</h2></div>
+                        </div>
+                        <div class="col-md-3 col-6">
+                            <div class="mini-card"><h6>Status</h6><h2 id="prediction-status">✔ Success</h2></div>
+                        </div>
+                    </div>
+
+                    <h5 class="mt-5">Experience Level</h5>
+                    <div class="progress">
+                        <div class="progress-bar" id="experience-progress" role="progressbar" style="width:0%" aria-valuemin="0" aria-valuemax="100">0%</div>
+                    </div>
+
+                    <div class="row mt-4">
+                        <div class="col-md-6">
+                            <div class="dashboard-card">
+                                <div class="card-icon">📈</div>
+                                <h5>Experience</h5>
+                                <h3 id="experience-category">—</h3>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="dashboard-card">
+                                <div class="card-icon">📄</div>
+                                <h5>HR Recommendation</h5>
+                                <h3 id="hr-recommendation">—</h3>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ai-card">
+                        <h4>🤖 AI Career Suggestion</h4>
+                        <p id="ai-suggestion">Your career suggestion will appear here.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h4>💼 HELPHR Technologies</h4>
+                <p>AI Powered Salary Prediction Dashboard</p>
+            </div>
+            <div class="col-md-6 text-md-end">
+                <p>Developed by <b>Rudreswar Prasad Paul</b> ❤️</p>
+                <p>Brainware University</p>
+            </div>
+        </div>
+        <hr>
+        <div class="text-center"><p>© 2026 All Rights Reserved</p></div>
+    </div>
+</footer>
+
+<div id="loader" class="d-none">
+    <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
